@@ -1,0 +1,133 @@
+/* Ferrari — Fábrica de Calzados · tokens de marca
+   Importar una sola vez en main.jsx:  import './styles/fonts.css'; import './styles/tokens.css';
+   Archivo (UI): npm i @fontsource-variable/archivo  →  import '@fontsource-variable/archivo'; */
+
+:root {
+  /* ── Color: núcleo de marca ─────────────────────────────── */
+  --negro: #000000;          /* color primario: fondo del sitio, igual al fondo del logo */
+  --blanco: #ffffff;         /* logo, titulares y texto principal sobre negro */
+
+  /* ── Color: neutros tomados de las fotos de producto ─────── */
+  --mesa: #363733;           /* la mesa de las fotos: fondo de fichas y galerías para que la foto "se funda" */
+  --mesa-sombra: #1c1c1a;    /* superficie elevada sobre negro (menú abierto, footer, modal) */
+  --hilo: #a8a79f;           /* texto secundario sobre negro (8.7:1) y sobre mesa (5:1); costuras */
+  --humo: #d9d8d2;           /* bordes y divisores en secciones blancas */
+  --tinta-2: #5c5b55;        /* texto secundario sobre blanco (6.8:1) */
+
+  /* ── Color: acento cuero (usar con mucha mesura) ─────────── */
+  --cuero: #a16459;          /* detalles gráficos ≥ 24px, punto de la i, estado activo */
+  --cuero-claro: #c58474;    /* acento en texto sobre negro (6.9:1) */
+  --cuero-oscuro: #8a4a3e;   /* acento en texto sobre blanco (6.7:1) */
+
+  /* ── Roles (tema oscuro = por defecto) ───────────────────── */
+  --bg: var(--negro);
+  --surface: var(--mesa);
+  --surface-raised: var(--mesa-sombra);
+  --ink: var(--blanco);
+  --ink-2: var(--hilo);
+  --accent: var(--cuero-claro);
+  --line: rgba(255, 255, 255, 0.16);
+  --focus: var(--blanco);
+
+  /* ── Tipografía ──────────────────────────────────────────── */
+  --font-marca: "TeX Gyre Schola", "Century Schoolbook", "New Century Schoolbook", Georgia, serif;
+  --font-ui: "Archivo Variable", "Archivo", system-ui, sans-serif;
+
+  /* Escala clásica (Bringhurst): 12 · 14 · 16 · 18 · 21 · 24 · 36 · 48 · 60 · 72 */
+  --fs-12: 0.75rem;
+  --fs-14: 0.875rem;
+  --fs-16: 1rem;
+  --fs-18: 1.125rem;
+  --fs-21: 1.3125rem;
+  --fs-24: 1.5rem;
+  --fs-36: 2.25rem;
+  --fs-48: 3rem;
+  --fs-60: 3.75rem;
+  --fs-72: 4.5rem;
+  --fs-display: clamp(3rem, 9vw, 8.5rem); /* titular de hero en Schola Bold Italic */
+
+  --lh-tight: 1.02;
+  --lh-head: 1.12;
+  --lh-body: 1.6;   /* serif → un poco más de interlínea */
+  --lh-ui: 1.35;
+
+  /* ── Espaciado (base 8) ──────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 144px;
+
+  /* ── Forma ───────────────────────────────────────────────── */
+  --radius-0: 0;        /* fotos y fichas: cortes rectos, como un catálogo */
+  --radius-pill: 999px; /* botones y chips de talle: eco del óvalo del logo */
+  --stroke-oval: 1.5px; /* línea del óvalo cuando se usa como motivo */
+
+  /* ── Movimiento ──────────────────────────────────────────── */
+  --ease-costura: cubic-bezier(0.65, 0, 0.35, 1);  /* trazos que se dibujan */
+  --ease-horma: cubic-bezier(0.2, 0.8, 0.2, 1);    /* entradas que asientan */
+  --ease-ojalillo: cubic-bezier(0.34, 1.56, 0.64, 1); /* el punto de la i: rebote corto */
+  --dur-1: 160ms;
+  --dur-2: 320ms;
+  --dur-3: 700ms;
+  --dur-4: 1200ms;
+
+  --content-max: 1280px;
+  --measure: 66ch;
+}
+
+/* Secciones claras (ficha técnica, contacto): agregar class="tema-blanco" */
+.tema-blanco {
+  --bg: var(--blanco);
+  --surface: #f2f2ef;
+  --surface-raised: var(--blanco);
+  --ink: var(--negro);
+  --ink-2: var(--tinta-2);
+  --accent: var(--cuero-oscuro);
+  --line: var(--humo);
+  --focus: var(--negro);
+  background: var(--bg);
+  color: var(--ink);
+}
+
+html {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, .display {
+  font-family: var(--font-marca);
+  font-style: italic;
+  font-weight: 700;
+  line-height: var(--lh-head);
+  letter-spacing: -0.01em;
+}
+
+.display {
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.02em;
+}
+
+.texto-marca {
+  font-family: var(--font-marca);
+  font-size: var(--fs-18);
+  line-height: var(--lh-body);
+  max-width: var(--measure);
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-1: 0ms; --dur-2: 0ms; --dur-3: 0ms; --dur-4: 0ms; }
+}

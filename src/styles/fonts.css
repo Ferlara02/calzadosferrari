@@ -1,0 +1,23 @@
+/* TeX Gyre Schola (clon libre de Century Schoolbook, licencia GUST — ver public/fonts/GUST-FONT-LICENSE.txt).
+   Es la familia del logo: la bajada "FABRICA DE CALZADOS" está en Century Schoolbook Bold
+   y el wordmark es de la misma familia en Bold Italic. Subset latino + español. */
+@font-face {
+  font-family: "TeX Gyre Schola";
+  src: url("/fonts/TeXGyreSchola-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "TeX Gyre Schola";
+  src: url("/fonts/TeXGyreSchola-Italic.woff2") format("woff2");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "TeX Gyre Schola";
+  src: url("/fonts/TeXGyreSchola-Bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "TeX Gyre Schola";
+  src: url("/fonts/TeXGyreSchola-BoldItalic.woff2") format("woff2");
+  font-weight: 700; font-style: italic; font-display: swap;
+}

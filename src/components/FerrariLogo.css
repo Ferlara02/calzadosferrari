@@ -1,0 +1,81 @@
+/* Animación de entrada del logo — un solo momento orquestado (~2 s):
+   1. El óvalo se dibuja desde la izquierda en dos mitades que se cierran a la derecha, como un cordón.
+   2. Las letras "suben" a su lugar, una detrás de otra, con la inclinación de la itálica.
+   3. El punto de la i cae y rebota como un ojalillo que se remacha.
+   4. La bajada se asienta, cerrando el espaciado hacia el centro. */
+
+.fl {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.fl-letra,
+.fl-punto,
+.fl-bajada {
+  transform-box: fill-box;
+}
+
+/* Estado de espera (animar="vista", todavía fuera de pantalla) */
+.fl--espera .fl-ovalo { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.fl--espera .fl-letra,
+.fl--espera .fl-punto,
+.fl--espera .fl-bajada { opacity: 0; }
+
+/* 1 · Óvalo */
+.fl--anim .fl-ovalo {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: fl-cordon 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.1s forwards;
+}
+@keyframes fl-cordon {
+  to { stroke-dashoffset: 0; }
+}
+
+/* 2 · Letras */
+.fl--anim .fl-letra {
+  transform-origin: 0% 100%;
+  animation: fl-sube 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation-delay: calc(0.45s + var(--i) * 70ms);
+}
+@keyframes fl-sube {
+  from { opacity: 0; transform: translate(-6%, 38%) skewX(-10deg); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* 3 · Punto de la i */
+.fl--anim .fl-punto {
+  transform-origin: 50% 100%;
+  animation: fl-ojalillo 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) 1.15s both;
+}
+@keyframes fl-ojalillo {
+  0%   { opacity: 0; transform: translateY(-320%); }
+  45%  { opacity: 1; transform: translateY(0) scale(1.18, 0.82); }
+  70%  { transform: translateY(-18%) scale(0.95, 1.06); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* 4 · Bajada */
+.fl--anim .fl-bajada {
+  animation: fl-asienta 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) 1.35s both;
+}
+@keyframes fl-asienta {
+  from { opacity: 0; transform: translateX(calc(var(--d) * 3px)); }
+  to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fl--anim .fl-ovalo,
+  .fl--anim .fl-letra,
+  .fl--anim .fl-punto,
+  .fl--anim .fl-bajada,
+  .fl--espera .fl-ovalo,
+  .fl--espera .fl-letra,
+  .fl--espera .fl-punto,
+  .fl--espera .fl-bajada {
+    animation: none;
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}

@@ -1,0 +1,250 @@
+/* Detalle de producto */
+.prod {
+  padding-top: 24px;
+  padding-bottom: 144px;
+}
+.volver {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font: 500 14px var(--font-ui);
+  color: var(--hilo);
+  text-decoration: none;
+}
+.volver:hover {
+  color: var(--blanco);
+}
+.prod-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+  gap: 72px;
+  align-items: start;
+  margin-top: 24px;
+}
+.prod-foto {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: var(--mesa);
+}
+.prod-flecha {
+  position: absolute;
+  top: 50%;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.55);
+  color: var(--blanco);
+  cursor: pointer;
+  transition: background var(--dur-1), border-color var(--dur-1);
+}
+.prod-flecha:hover {
+  background: var(--negro);
+  border-color: var(--blanco);
+}
+.prod-flecha--izq {
+  left: 14px;
+}
+.prod-flecha--der {
+  right: 14px;
+}
+.prod-contador {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(0, 0, 0, 0.6);
+  font: 500 12px var(--font-ui);
+  font-variant-numeric: tabular-nums;
+}
+.prod-foto > img,
+.prod-foto > svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: aparece var(--dur-3) ease both;
+}
+.prod-miniaturas {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.prod-mini {
+  flex: none;
+  width: 72px;
+  aspect-ratio: 3 / 4;
+  padding: 0;
+  border: 1.5px solid transparent;
+  background: var(--mesa);
+  cursor: pointer;
+  overflow: hidden;
+}
+.prod-mini img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.prod-mini.is-activa {
+  border-color: var(--blanco);
+}
+.prod-info {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 8px;
+}
+.prod-nombre {
+  font-size: 44px;
+  line-height: 1.08;
+}
+.prod-precio {
+  font-size: 21px;
+}
+/* Selector de color */
+.prod-colores {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.prod-colores legend {
+  padding: 0;
+  margin-bottom: 10px;
+}
+.prod-colores strong,
+.prod-color-unico {
+  color: var(--blanco);
+  font-weight: 600;
+}
+.colores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.color {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 16px 0 8px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--line);
+  background: transparent;
+  color: var(--hilo);
+  font: 500 14px var(--font-ui);
+  cursor: pointer;
+  transition: border-color var(--dur-1), color var(--dur-1);
+}
+.color:hover {
+  color: var(--blanco);
+  border-color: var(--hilo);
+}
+.color.is-activo {
+  color: var(--blanco);
+  border-color: var(--blanco);
+}
+.prod-talles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.talles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  list-style: none;
+}
+.talles li {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--hilo);
+  border-radius: var(--radius-pill);
+  font: 500 14px var(--font-ui);
+}
+.talle-consulta {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1.5px dashed var(--hilo);
+  border-radius: var(--radius-pill);
+  font: 500 14px var(--font-ui);
+  color: var(--blanco);
+  text-decoration: none;
+  transition: border-color var(--dur-1);
+}
+.talle-consulta:hover {
+  color: var(--blanco);
+  border-color: var(--blanco);
+}
+.prod-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 8px;
+}
+/* Botón de Mercado Libre: amarillo de la marca con su logo */
+.btn-ml {
+  background: #ffe600;
+  border-color: #ffe600;
+  color: #2d3277;
+  padding-left: 16px;
+}
+.btn-ml:hover {
+  background: #fff159;
+  border-color: #fff159;
+  color: #2d3277;
+}
+.btn-ml-logo {
+  height: 26px;
+  width: auto;
+}
+.prod-otros {
+  margin-top: 144px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+.vacio {
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+}
+
+@media (max-width: 960px) {
+  .prod-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+  .prod-info {
+    position: static;
+  }
+  .prod-nombre {
+    font-size: 34px;
+  }
+  .prod-otros {
+    margin-top: 96px;
+  }
+}

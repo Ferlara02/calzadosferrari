@@ -1,0 +1,163 @@
+/* Base: reset, tipografía y botones */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+}
+
+body {
+  margin: 0;
+  background: var(--negro);
+  color: var(--blanco);
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+h1, h2, h3, p, ul, dl, dd {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: var(--cuero-claro);
+}
+
+button {
+  font: inherit;
+}
+
+.contenedor {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
+
+.saltar {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 50;
+  background: var(--blanco);
+  color: var(--negro);
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  font: 600 14px var(--font-ui);
+}
+.saltar:focus {
+  top: 16px;
+}
+
+/* Tipografía */
+.titulo {
+  font-family: var(--font-marca);
+  font-style: italic;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.h2 {
+  font-size: 40px;
+  line-height: 1.1;
+}
+.h3 {
+  font-size: 28px;
+  line-height: 1.15;
+}
+.texto {
+  font-family: var(--font-marca);
+  font-size: 16px;
+  line-height: var(--lh-body);
+  max-width: 34em;
+}
+.texto-2 {
+  color: var(--hilo);
+}
+.meta {
+  font: 400 13px/1.5 var(--font-ui);
+  color: var(--hilo);
+}
+.meta a {
+  color: var(--blanco);
+}
+.precio {
+  font: 600 15px/1.2 var(--font-ui);
+  font-variant-numeric: tabular-nums;
+}
+.pila {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.pila--amplia {
+  gap: 28px;
+}
+
+/* Botones: pill, eco del óvalo */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--blanco);
+  font: 600 15px var(--font-ui);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--dur-1), color var(--dur-1), border-color var(--dur-1);
+}
+.btn-chico {
+  min-height: 44px;
+  padding: 0 20px;
+  font-size: 14px;
+}
+.btn-blanco {
+  background: var(--blanco);
+  color: var(--negro);
+}
+.btn-blanco:hover {
+  background: var(--negro);
+  color: var(--blanco);
+}
+.btn-linea {
+  background: transparent;
+  color: var(--blanco);
+  border-color: var(--hilo);
+}
+.btn-linea:hover {
+  color: var(--blanco);
+  border-color: var(--blanco);
+}
+.btn-negro {
+  background: var(--negro);
+  color: var(--blanco);
+  border-color: var(--negro);
+}
+.btn-negro:hover {
+  background: var(--blanco);
+  color: var(--negro);
+}
+
+@media (max-width: 960px) {
+  .contenedor {
+    padding: 0 20px;
+  }
+  .h2 {
+    font-size: 34px;
+  }
+}

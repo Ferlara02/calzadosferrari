@@ -1,0 +1,166 @@
+/* Header, pie y botón flotante de WhatsApp */
+
+.hdr {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding-top: 28px;
+  padding-bottom: 28px;
+}
+.hdr-logo {
+  display: block;
+  width: 132px;
+  color: var(--blanco);
+}
+.hdr-logo:hover {
+  color: var(--blanco);
+}
+.hdr-nav {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-left: auto;
+  font: 500 14px var(--font-ui);
+}
+.hdr-nav a {
+  text-decoration: none;
+  padding: 12px 0;
+}
+.hdr-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.hdr-menu {
+  display: none;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid var(--hilo);
+  background: transparent;
+  color: var(--blanco);
+  cursor: pointer;
+}
+
+@media (max-width: 960px) {
+  .hdr {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .hdr-logo {
+    width: 104px;
+  }
+  .hdr-menu {
+    display: inline-flex;
+  }
+  .hdr-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 12px;
+    right: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px 20px;
+    background: var(--mesa-sombra);
+    border: 1px solid var(--line);
+    font-size: 16px;
+  }
+  .hdr-nav.is-abierto {
+    display: flex;
+  }
+  .hdr-nav a {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .hdr-nav a:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* Pie */
+.pie {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 48px;
+  align-items: end;
+  padding-top: 96px;
+  padding-bottom: 56px;
+  border-top: 1px solid var(--line);
+}
+.pie-logo {
+  width: 280px;
+  color: var(--blanco);
+}
+.pie-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 28px;
+  font: 500 14px var(--font-ui);
+}
+.pie-nav a {
+  text-decoration: none;
+  padding: 8px 0;
+}
+.pie-lugar {
+  text-align: right;
+}
+
+@media (max-width: 960px) {
+  .pie {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    padding-top: 64px;
+    padding-bottom: 112px;
+  }
+  .pie-nav {
+    justify-content: flex-start;
+  }
+  .pie-lugar {
+    text-align: left;
+  }
+}
+
+/* WhatsApp flotante: blanco y negro, sin el verde */
+.wa {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 30;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 0 22px 0 18px;
+  border-radius: var(--radius-pill);
+  background: var(--negro);
+  color: var(--blanco);
+  border: 1.5px solid var(--blanco);
+  font: 600 15px var(--font-ui);
+  text-decoration: none;
+  animation: wa-entra var(--dur-3) var(--ease-horma) 2s both;
+  transition: background var(--dur-1), color var(--dur-1);
+}
+.wa:hover {
+  background: var(--blanco);
+  color: var(--negro);
+}
+@keyframes wa-entra {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+@media (max-width: 960px) {
+  .wa {
+    right: 16px;
+    bottom: 16px;
+  }
+}
