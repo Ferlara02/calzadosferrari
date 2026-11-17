@@ -28,7 +28,6 @@ export default function ProductoCard({ producto, indice = 0 }) {
         <p className="meta">{producto.detalle}</p>
       </div>
       <div className="card-pie">
-        <p className="precio">{formatoPrecio(producto.precio)}</p>
         {conColores.length > 1 && (
           <ul className="card-colores" aria-label={`Disponible en ${conColores.length} colores: ${conColores.map((c) => c.nombre).join(", ")}`}>
             {conColores.slice(0, 5).map((c) => (
@@ -37,6 +36,7 @@ export default function ProductoCard({ producto, indice = 0 }) {
             {conColores.length > 5 && <li className="card-colores-mas">+{conColores.length - 5}</li>}
           </ul>
         )}
+        <p className="precio">{formatoPrecio(producto.precio)}</p>
       </div>
     </Link>
   );

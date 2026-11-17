@@ -161,3 +161,10 @@ button {
     font-size: 34px;
   }
 }
+
+/* Tablet: un poco más de margen a los costados */
+@media (min-width: 641px) and (max-width: 960px) {
+  .contenedor {
+    padding: 0 36px;
+  }
+}

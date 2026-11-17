@@ -15,6 +15,7 @@ export default function Producto() {
   const [params, setParams] = useSearchParams();
   const producto = buscarProducto(id);
   const [fotoActiva, setFotoActiva] = useState(0);
+  const [talle, setTalle] = useState(null);
 
   const colores = producto ? variantes(producto) : [];
   // El color elegido vive en la URL (?color=marron) para poder compartir el link
@@ -26,6 +27,8 @@ export default function Producto() {
 
   // Al cambiar de producto o de color, vuelve a la primera foto
   useEffect(() => setFotoActiva(0), [id, color?.slug]);
+  // El talle elegido se borra al pasar a otro producto
+  useEffect(() => setTalle(null), [id]);
 
   if (!producto) return <NoEncontrada />;
 
@@ -41,7 +44,7 @@ export default function Producto() {
   const otros = [
     ...PRODUCTOS.filter((p) => p.id !== producto.id && tiposDe(producto).some((t) => esDeTipo(p, t))),
     ...PRODUCTOS.filter((p) => p.id !== producto.id && !tiposDe(producto).some((t) => esDeTipo(p, t))),
-  ].slice(0, 3);
+  ].slice(0, 4);
 
   return (
     <div className="contenedor prod">
@@ -138,9 +141,23 @@ export default function Producto() {
             {producto.talles.length > 0 ? (
               <ul className="talles">
                 {producto.talles.map((t) => (
-                  <li key={t}>{t}</li>
+                  <li key={t}>
+                    <button
+                      type="button"
+                      className={`talle ${t === talle ? "is-activo" : ""}`}
+                      aria-pressed={t === talle}
+                      onClick={() => setTalle((actual) => (actual === t ? null : t))}
+                    >
+                      {t}
+                    </button>
+                  </li>
                 ))}
               </ul>
+            ) : null}
+            {producto.talles.length > 0 ? (
+              <p className="meta talles-ayuda" aria-live="polite">
+                {talle ? `Talle ${talle}: lo sumamos a tu consulta por WhatsApp.` : "Tocá tu talle para sumarlo a la consulta."}
+              </p>
             ) : (
               <a
                 className="talle-consulta"
@@ -157,7 +174,7 @@ export default function Producto() {
             {mercadoLibre && <BotonMercadoLibre href={mercadoLibre} />}
             <a
               className={`btn ${mercadoLibre ? "btn-linea" : "btn-blanco"}`}
-              href={linkWhatsApp(MENSAJES.producto(producto.nombre, color?.nombre))}
+              href={linkWhatsApp(MENSAJES.producto(producto.nombre, color?.nombre, talle))}
               target="_blank"
               rel="noreferrer"
             >

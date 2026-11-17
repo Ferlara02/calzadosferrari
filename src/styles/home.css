@@ -127,11 +127,12 @@
   display: grid;
   grid-template-columns: 200px minmax(0, 1fr);
   gap: 64px;
-  padding: 72px 32px 96px;
+  padding: 72px 32px 56px;
 }
 .cat-side {
   position: sticky;
-  top: 24px;
+  top: calc(24px + var(--alto-barra));
+  transition: top var(--dur-2) var(--ease-horma);
   align-self: start;
   display: flex;
   flex-direction: column;
@@ -174,6 +175,9 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 56px 32px;
 }
+.grilla--otros {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
 .card {
   display: flex;
   flex-direction: column;
@@ -214,9 +218,9 @@
 }
 .card-pie {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
 }
 .card-colores {
   display: flex;
@@ -319,8 +323,8 @@
   justify-content: space-between;
   gap: 24px;
   flex-wrap: wrap;
-  margin-top: 64px;
-  padding-top: 28px;
+  margin-top: 48px;
+  padding-top: 24px;
   border-top: 1px solid var(--line);
 }
 
@@ -332,7 +336,14 @@
   padding-top: 0;
 }
 
-/* Cintos */
+/* Cintos: sección blanca para separarla del catálogo */
+.sec-cintos {
+  background: var(--blanco);
+  color: var(--negro);
+}
+.cintos-bajada {
+  color: var(--tinta-2);
+}
 .cintos {
   display: grid;
   grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
@@ -344,42 +355,92 @@
   height: auto;
   overflow: visible;
 }
-.cinto-borde,
-.cinto-cuero {
+.cinto-sombra,
+.cinto-cuero,
+.cinto-cara,
+.cinto-brillo {
   fill: none;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
 }
-.cinto-borde {
-  stroke: var(--blanco);
-  stroke-width: 54;
+.cinto-sombra {
+  stroke: rgba(0, 0, 0, 0.22);
+  stroke-width: 40;
+  transform: translate(6px, 16px);
 }
 .cinto-cuero {
   stroke: var(--negro);
-  stroke-width: 42;
+  stroke-width: 48;
+}
+/* la cara del cuero, un tono arriba del canto, da el volumen */
+.cinto-cara {
+  stroke: #1b1b19;
+  stroke-width: 36;
+}
+.cinto-brillo {
+  stroke: rgba(255, 255, 255, 0.14);
+  stroke-width: 3;
+  stroke-linecap: round;
 }
 .cinto-costura path {
   fill: none;
-  stroke: var(--hilo);
-  stroke-width: 2;
-  stroke-dasharray: 8 8;
+  stroke: #8c8b84;
+  stroke-width: 1.8;
+  stroke-dasharray: 7 5;
+  stroke-linecap: round;
 }
 .cinto-costura,
 .cinto-agujeros,
+.cinto-presilla,
 .cinto-hebilla {
   opacity: 0;
 }
-.cinto-agujeros {
+.cinto-ojalillo {
+  fill: #2a2a27;
+  stroke: #6e6d67;
+  stroke-width: 1.2;
+}
+.cinto-agujero {
   fill: var(--blanco);
 }
-.cinto-hebilla {
+.cinto-presilla rect {
+  fill: var(--negro);
+  stroke: #3a3a36;
+  stroke-width: 1.5;
+}
+.cinto-presilla path {
   fill: none;
-  stroke: var(--blanco);
+  stroke: #8c8b84;
+  stroke-width: 1.4;
+  stroke-dasharray: 4 4;
+}
+.cinto-doblez {
+  fill: #111110;
+}
+.hebilla-marco {
+  fill: none;
+  stroke: var(--negro);
+  stroke-width: 9;
+}
+/* brillo de metal sobre una parte del marco */
+.hebilla-reflejo {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.55);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 22 78;
+  stroke-dashoffset: -4;
+}
+.hebilla-lengueta {
+  fill: none;
+  stroke: var(--negro);
   stroke-width: 7;
   stroke-linecap: round;
 }
-.cinto.is-visto .cinto-borde,
-.cinto.is-visto .cinto-cuero {
+.cinto.is-visto .cinto-sombra,
+.cinto.is-visto .cinto-cuero,
+.cinto.is-visto .cinto-cara,
+.cinto.is-visto .cinto-brillo {
   animation: trazo 1.3s var(--ease-costura) forwards;
 }
 .cinto.is-visto .cinto-costura {
@@ -387,6 +448,9 @@
 }
 .cinto.is-visto .cinto-agujeros {
   animation: aparece 0.4s ease 1.3s forwards;
+}
+.cinto.is-visto .cinto-presilla {
+  animation: aparece 0.4s ease 1.25s forwards;
 }
 .cinto.is-visto .cinto-hebilla {
   animation: hebilla 0.6s var(--ease-ojalillo) 1.2s forwards;
@@ -510,8 +574,14 @@
 }
 .rep-titulo {
   font-size: 64px;
-  line-height: 1.02;
+  line-height: 1.1;
   letter-spacing: -0.02em;
+}
+/* El ¿ de esta tipografía baja mucho: se sube para que no pise "Lo cosemos" */
+.rep-abre {
+  display: inline-block;
+  transform: translateY(-0.14em);
+  margin-right: 0.02em;
 }
 .rep-bajada {
   font-size: 17px;
@@ -589,7 +659,7 @@
 .rotura {
   display: block;
   width: 100%;
-  height: 160px;
+  height: clamp(96px, 11vw, 160px);
   margin-top: 96px;
 }
 .rotura-linea {
@@ -620,6 +690,9 @@
 }
 
 /* Dónde estamos */
+#local.sec {
+  padding-bottom: 96px;
+}
 .local {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -773,7 +846,7 @@
   .cat {
     grid-template-columns: minmax(0, 1fr);
     gap: 24px;
-    padding: 40px 16px 64px;
+    padding: 40px 16px 36px;
   }
   .cat-side {
     position: static;
@@ -795,9 +868,26 @@
     background: var(--blanco);
     color: var(--negro);
   }
-  .grilla {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 36px 14px;
+  .grilla,
+  .grilla--otros {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 40px 18px;
+  }
+  /* 6 · degradé que avisa que hay más filtros hacia un costado */
+  .filtros.hay-der {
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 48px), transparent);
+  }
+  .filtros.hay-izq {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 48px);
+    mask-image: linear-gradient(to right, transparent, #000 48px);
+  }
+  .filtros.hay-izq.hay-der {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+  }
+  #local.sec {
+    padding-bottom: 64px;
   }
   .card-nombre {
     font-size: 16px;
@@ -856,12 +946,29 @@
   }
 }
 
+/* ── Celular chico: catálogo en 2 columnas ─────────────── */
+@media (max-width: 640px) {
+  .grilla,
+  .grilla--otros {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px 14px;
+  }
+  .filtros {
+    scrollbar-width: none;
+  }
+  .filtros::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* Sin animaciones si la persona lo pidió en su sistema */
 @media (prefers-reduced-motion: reduce) {
   .hero-ovalo,
   .rotura-linea,
-  .cinto-borde,
-  .cinto-cuero {
+  .cinto-sombra,
+  .cinto-cuero,
+  .cinto-cara,
+  .cinto-brillo {
     stroke-dashoffset: 0 !important;
     animation: none !important;
   }
@@ -871,6 +978,7 @@
   .grilla .consulta,
   .cinto-costura,
   .cinto-agujeros,
+  .cinto-presilla,
   .cinto-hebilla,
   .ficha,
   .parche,
@@ -884,5 +992,14 @@
   }
   .may-marco {
     transition: none;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 960px) {
+  .capas {
+    margin: -64px 24px 0;
+  }
+  .cat {
+    padding: 48px 28px 40px;
   }
 }

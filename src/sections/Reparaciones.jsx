@@ -46,7 +46,7 @@ export default function Reparaciones() {
         <div className="rep-grid">
           <div className="pila pila--amplia">
             <h2 id="rep-titulo" className="titulo rep-titulo">
-              ¿Se rompió?
+              <span className="rep-abre">¿</span>Se rompió?
               <br />
               Lo cosemos.
             </h2>
@@ -83,7 +83,7 @@ export default function Reparaciones() {
         ref={refRotura}
         className={`rotura ${roturaVista ? "is-visto" : ""}`}
         viewBox="0 0 1440 200"
-        preserveAspectRatio="none"
+        preserveAspectRatio="xMidYMid slice"
         aria-hidden="true"
       >
         <path className="rotura-linea" d={ROTURA} pathLength="1" />

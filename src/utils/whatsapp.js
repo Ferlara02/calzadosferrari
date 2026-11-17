@@ -15,6 +15,8 @@ export const MENSAJES = {
   cintos: "Hola, quería consultar por los cintos de cuero (modelos, colores y medidas).",
   talle_producto: (nombre, color) =>
     `Hola, quería consultar qué talles tienen del modelo "${nombre}"${color ? ` en color ${color.toLowerCase()}` : ""}.`,
-  producto: (nombre, color) =>
-    `Hola, quería consultar por el modelo "${nombre}"${color ? ` en color ${color.toLowerCase()}` : ""}.`,
+  producto: (nombre, color, talle) =>
+    `Hola, quería consultar por el modelo "${nombre}"${color ? ` en color ${color.toLowerCase()}` : ""}${
+      talle ? `, talle ${talle}` : ""
+    }.`,
 };

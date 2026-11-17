@@ -7,7 +7,7 @@ const RUBROS = ["Zapatillas", "Zapatos", "Botas", "Sandalias"];
 export default function Mayorista() {
   const [ref, visto] = useEnPantalla({ threshold: 0.3 });
   return (
-    <section id="mayorista" className="sec sec--sin-arriba" aria-labelledby="mayorista-titulo">
+    <section id="mayorista" className="sec" aria-labelledby="mayorista-titulo">
       <div className="contenedor may">
         <div className="pila may-texto">
           <h2 id="mayorista-titulo" className="titulo h2">

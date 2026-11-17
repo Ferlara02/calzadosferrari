@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ProductoCard from "../components/ProductoCard";
 import useEnPantalla from "../hooks/useEnPantalla";
 import { PRODUCTOS, TIPOS, esDeTipo } from "../data/productos";
@@ -10,6 +10,21 @@ export default function Catalogo() {
   const [filtro, setFiltro] = useState("Todos");
   const [visibles, setVisibles] = useState(POR_PAGINA);
   const [refGrilla, vista] = useEnPantalla({ threshold: 0.05 });
+  // En celular los filtros se deslizan de costado: un degradé avisa de qué lado hay más
+  const refFiltros = useRef(null);
+  const [bordes, setBordes] = useState({ izq: false, der: false });
+  const medirBordes = () => {
+    const el = refFiltros.current;
+    if (!el) return;
+    const izq = el.scrollLeft > 4;
+    const der = el.scrollLeft + el.clientWidth < el.scrollWidth - 4;
+    setBordes((b) => (b.izq === izq && b.der === der ? b : { izq, der }));
+  };
+  useEffect(() => {
+    medirBordes();
+    window.addEventListener("resize", medirBordes);
+    return () => window.removeEventListener("resize", medirBordes);
+  }, []);
 
   // Solo se muestran como filtro los tipos que tienen al menos un producto.
   const filtros = useMemo(
@@ -33,14 +48,22 @@ export default function Catalogo() {
             <h2 id="catalogo-titulo" className="titulo cat-titulo">
               Catálogo
             </h2>
-            <ul className="filtros" aria-label="Filtrar por tipo">
+            <ul
+              ref={refFiltros}
+              className={`filtros ${bordes.izq ? "hay-izq" : ""} ${bordes.der ? "hay-der" : ""}`}
+              aria-label="Filtrar por tipo"
+              onScroll={medirBordes}
+            >
               {filtros.map((t) => (
                 <li key={t}>
                   <button
                     type="button"
                     className={`filtro ${t === filtro ? "is-activo" : ""}`}
                     aria-pressed={t === filtro}
-                    onClick={() => elegir(t)}
+                    onClick={(e) => {
+                      elegir(t);
+                      e.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+                    }}
                   >
                     {t}
                   </button>

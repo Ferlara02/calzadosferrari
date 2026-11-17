@@ -1,5 +1,36 @@
 /* Header, pie y botón flotante de WhatsApp */
 
+/* Barra fija: se esconde al bajar y vuelve al subir */
+.hdr-barra {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: transparent;
+  transition: transform var(--dur-2) var(--ease-horma), background var(--dur-1), border-color var(--dur-1);
+  border-bottom: 1px solid transparent;
+}
+.hdr-barra.is-despegado {
+  background: var(--negro);
+  border-bottom-color: var(--line);
+}
+.hdr-barra.is-oculto {
+  transform: translateY(-100%);
+}
+.hdr-barra.is-despegado .hdr {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+/* Lo que queda pegado arriba al scrollear deja lugar a la barra cuando está visible */
+:root {
+  --alto-barra: 0px;
+}
+html[data-barra="visible"] {
+  --alto-barra: 76px;
+}
+[id] {
+  scroll-margin-top: 80px;
+}
+
 .hdr {
   position: relative;
   z-index: 20;
@@ -9,6 +40,7 @@
   gap: 32px;
   padding-top: 28px;
   padding-bottom: 28px;
+  transition: padding var(--dur-2) var(--ease-horma);
 }
 .hdr-logo {
   display: block;
@@ -52,6 +84,13 @@
     padding-top: 20px;
     padding-bottom: 20px;
   }
+  .hdr-barra.is-despegado .hdr {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  html[data-barra="visible"] {
+    --alto-barra: 64px;
+  }
   .hdr-logo {
     width: 104px;
   }
@@ -85,46 +124,66 @@
 }
 
 /* Pie */
-.pie {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 48px;
-  align-items: end;
-  padding-top: 96px;
-  padding-bottom: 56px;
+.pie-barra {
   border-top: 1px solid var(--line);
 }
+.pie {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+  gap: 48px;
+  padding-top: 72px;
+  padding-bottom: 72px;
+  font: 400 14px/1.6 var(--font-ui);
+}
+.pie-marca {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 .pie-logo {
-  width: 280px;
+  width: 168px;
   color: var(--blanco);
 }
-.pie-nav {
+.pie-col {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 28px;
-  font: 500 14px var(--font-ui);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
 }
-.pie-nav a {
+.pie-titulo {
+  margin-bottom: 8px;
+  font: 600 14px var(--font-ui);
+  color: var(--blanco);
+}
+.pie-col p,
+.pie-dato {
+  color: var(--hilo);
+}
+.pie-col a {
+  color: var(--blanco);
   text-decoration: none;
-  padding: 8px 0;
+  padding: 2px 0;
 }
-.pie-lugar {
-  text-align: right;
+.pie-col a:hover {
+  text-decoration: underline;
 }
 
 @media (max-width: 960px) {
   .pie {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 28px;
-    padding-top: 64px;
-    padding-bottom: 112px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 36px 24px;
+    padding-top: 56px;
+    /* deja lugar al botón flotante de WhatsApp */
+    padding-bottom: 104px;
   }
-  .pie-nav {
-    justify-content: flex-start;
+  .pie-marca {
+    grid-column: 1 / -1;
   }
-  .pie-lugar {
-    text-align: left;
+  .pie-logo {
+    width: 132px;
+  }
+  .pie-col a {
+    padding: 6px 0;
   }
 }
 
@@ -162,5 +221,23 @@
   .wa {
     right: 16px;
     bottom: 16px;
+  }
+}
+/* En celular, solo el ícono: ocupa menos y no tapa el contenido */
+@media (max-width: 640px) {
+  .wa {
+    width: 52px;
+    min-height: 52px;
+    height: 52px;
+    padding: 0;
+    justify-content: center;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  }
+  .wa span {
+    display: none;
+  }
+  .wa svg {
+    width: 24px;
+    height: 24px;
   }
 }

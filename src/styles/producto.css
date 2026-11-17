@@ -98,7 +98,8 @@
 }
 .prod-info {
   position: sticky;
-  top: 24px;
+  top: calc(24px + var(--alto-barra));
+  transition: top var(--dur-2) var(--ease-horma);
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -162,22 +163,39 @@
   gap: 10px;
 }
 .talles {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  /* filas parejas de 6 */
+  grid-template-columns: repeat(6, 48px);
   gap: 8px;
   padding: 0;
   list-style: none;
 }
-.talles li {
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0 12px;
+.talle {
+  width: 48px;
+  height: 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border: 1.5px solid var(--hilo);
-  border-radius: var(--radius-pill);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--blanco);
   font: 500 14px var(--font-ui);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background var(--dur-1), color var(--dur-1), border-color var(--dur-1);
+}
+.talle:hover {
+  border-color: var(--blanco);
+}
+.talle.is-activo {
+  background: var(--blanco);
+  border-color: var(--blanco);
+  color: var(--negro);
+  font-weight: 700;
+}
+.talles-ayuda {
+  color: var(--hilo);
 }
 .talle-consulta {
   align-self: flex-start;
@@ -221,6 +239,7 @@
 .btn-ml-logo {
   height: 26px;
   width: auto;
+  flex-shrink: 0;
 }
 .prod-otros {
   margin-top: 144px;

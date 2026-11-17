@@ -1,15 +1,12 @@
-import { useState } from "react";
 import { IconoFlecha } from "./Iconos";
 
-// Logo oficial de Mercado Libre: guardarlo en public/marcas/mercadolibre.svg (o .png y cambiar la ruta).
-// Si el archivo no está, el botón se muestra igual, solo con el texto.
-const LOGO = "/marcas/mercadolibre.svg";
+// Logo oficial de Mercado Libre (public/marcas/mercadolibre.webp)
+const LOGO = "/marcas/mercadolibre.webp";
 
 export default function BotonMercadoLibre({ href }) {
-  const [conLogo, setConLogo] = useState(true);
   return (
     <a className="btn btn-ml" href={href} target="_blank" rel="noreferrer">
-      {conLogo && <img src={LOGO} alt="" className="btn-ml-logo" onError={() => setConLogo(false)} />}
+      <img src={LOGO} alt="" className="btn-ml-logo" width="37" height="26" />
       Ver en Mercado Libre
       <IconoFlecha />
     </a>
