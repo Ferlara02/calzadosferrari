@@ -11,11 +11,12 @@ const ANUNCIOS = [
   { texto: "Calzado a medida", a: "/#mayorista" },
   { texto: "Cintos de cuero a buen precio", a: "/#cintos" },
   { texto: "Ventas por mayor", a: "/#mayorista" },
+  { texto: "Más de 20 años fabricando", a: "/#catalogo" },
   { texto: "Fábrica en Córdoba", a: "/#local" },
 ];
 
 // "clara": cinto blanco con detalles en negro · "oscura": cinto negro con detalles en blanco
-const TONO = "clara";
+const TONO = "oscura";
 
 // Copias del tramo + hebilla: alcanza para cubrir pantallas anchas sin que se vea el final
 const COPIAS = 3;

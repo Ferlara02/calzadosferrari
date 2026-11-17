@@ -1008,13 +1008,16 @@
 .cinta {
   --cinta-alto: 40px;                   /* alto del cuero; todo lo demás escala con esto */
   --u: calc(var(--cinta-alto) / 34);
-  --cinta-dur: 36s;                     /* lo que tarda en pasar un tramo + hebilla */
+  --cinta-dur: 42s;                     /* lo que tarda en pasar un tramo + hebilla */
+  /* aire arriba y abajo para que la sombra no se corte (overflow: hidden) */
+  padding: calc(var(--u) * 8) 0;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
 }
 .cinta-pista {
   display: flex;
   width: max-content;
+  filter: var(--cinta-sombra-externa);
   animation: cinta-correr var(--cinta-dur) linear infinite;
 }
 /* Tonos (TONO en CintaAnuncios.jsx) */
@@ -1031,6 +1034,8 @@
   --cinta-metal: var(--blanco);
   --cinta-metal-borde: transparent;
   --cinta-reflejo: var(--hilo);
+  /* sombra blanca suave: despega el cinto negro del fondo negro */
+  --cinta-sombra-externa: drop-shadow(0 calc(var(--u) * 2) calc(var(--u) * 5) rgba(255, 255, 255, 0.22));
 }
 .cinta--clara {
   --cinta-cara: var(--blanco);
@@ -1045,6 +1050,7 @@
   --cinta-metal: var(--negro);
   --cinta-metal-borde: var(--hilo);     /* sin esto, el marco negro se pierde sobre el fondo negro */
   --cinta-reflejo: rgba(255, 255, 255, 0.55);
+  --cinta-sombra-externa: none;
 }
 /* Se frena para poder leer o tocar un anuncio:
    - mientras el dedo está apoyado (:active);
@@ -1173,7 +1179,7 @@
 @media (max-width: 640px) {
   .cinta {
     --cinta-alto: 36px;
-    --cinta-dur: 34s;
+    --cinta-dur: 40s;
   }
 }
 @media (prefers-reduced-motion: reduce) {
