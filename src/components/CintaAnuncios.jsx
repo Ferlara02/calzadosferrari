@@ -18,12 +18,32 @@ const ANUNCIOS = [
 // "clara": cinto blanco con detalles en negro · "oscura": cinto negro con detalles en blanco
 const TONO = "oscura";
 
+// true: el cinto cruza la portada levemente en diagonal
+const INCLINADO = false;
+
+// true: el cuero tiene un brillo arriba y se oscurece abajo, como un cinto con volumen
+const VOLUMEN = true;
+
 // Copias del tramo + hebilla: alcanza para cubrir pantallas anchas sin que se vea el final
 const COPIAS = 3;
 
 export default function CintaAnuncios() {
   return (
-    <div className={`cinta cinta--${TONO}`} role="region" aria-label="Anuncios">
+    <div
+      className={`cinta cinta--${TONO} ${INCLINADO ? "cinta--inclinada" : ""} ${VOLUMEN ? "cinta--volumen" : ""}`}
+      role="region"
+      aria-label="Anuncios"
+    >
+      {/* degradé del cuero, compartido por todas las hebillas (colores en home.css) */}
+      <svg className="cinta-defs" width="0" height="0" aria-hidden="true" focusable="false">
+        <linearGradient id="cinta-volumen" gradientUnits="userSpaceOnUse" x1="0" y1="16" x2="0" y2="44">
+          <stop offset="0" className="cinta-vol-1" />
+          <stop offset="0.28" className="cinta-vol-2" />
+          <stop offset="0.6" className="cinta-vol-3" />
+          <stop offset="1" className="cinta-vol-4" />
+        </linearGradient>
+      </svg>
+      <div className="cinta-giro">
       <div className="cinta-pista">
         {Array.from({ length: COPIAS }, (_, c) => (
           // Solo la primera copia la leen los lectores de pantalla y el teclado
@@ -40,6 +60,7 @@ export default function CintaAnuncios() {
             <Hebilla />
           </div>
         ))}
+      </div>
       </div>
     </div>
   );
