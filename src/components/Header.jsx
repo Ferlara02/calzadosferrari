@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import FerrariLogo from "./FerrariLogo";
-import { IconoCerrar, IconoMenu } from "./Iconos";
+import { IconoMenuCruz } from "./Iconos";
 import { linkWhatsApp, MENSAJES } from "../utils/whatsapp";
 
 export const SECCIONES = [
@@ -58,8 +58,8 @@ export default function Header() {
         </Link>
 
         <nav className={`hdr-nav ${abierto ? "is-abierto" : ""}`} aria-label="Principal">
-          {SECCIONES.map((s) => (
-            <Link key={s.id} to={`/#${s.id}`} onClick={() => setAbierto(false)}>
+          {SECCIONES.map((s, i) => (
+            <Link key={s.id} to={`/#${s.id}`} onClick={() => setAbierto(false)} style={{ "--i": i }}>
               {s.label}
             </Link>
           ))}
@@ -76,7 +76,7 @@ export default function Header() {
             aria-label={abierto ? "Cerrar menú" : "Abrir menú"}
             onClick={() => setAbierto((v) => !v)}
           >
-            {abierto ? <IconoCerrar /> : <IconoMenu />}
+            <IconoMenuCruz />
           </button>
         </div>
       </header>

@@ -52,14 +52,14 @@ export const IconoEscudo = ({ size = 14 }) => (
   </svg>
 );
 
-export const IconoMenu = ({ size = 22 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
-    <path d="M4 8h16M4 16h16" />
-  </svg>
-);
-
-export const IconoCerrar = ({ size = 22 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" {...base}>
-    <path d="M6 6l12 12M18 6L6 18" />
+/**
+ * Menú ⇄ cruz en un solo ícono. Las dos líneas están dibujadas en el centro y
+ * el CSS (layout.css, .icono-menu) las separa o las gira según el
+ * aria-expanded del botón, así la transición es continua.
+ */
+export const IconoMenuCruz = ({ size = 22 }) => (
+  <svg className="icono-menu" width={size} height={size} viewBox="0 0 24 24" {...base}>
+    <path className="icono-menu-linea icono-menu-linea--a" d="M4 12h16" />
+    <path className="icono-menu-linea icono-menu-linea--b" d="M4 12h16" />
   </svg>
 );

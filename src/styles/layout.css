@@ -2,23 +2,35 @@
 
 /* Barra fija: se esconde al bajar y vuelve al subir */
 .hdr-barra {
+  --hdr-pad: 28px;       /* aire arriba y abajo en el inicio de la página */
+  --hdr-pad-chico: 14px; /* aire cuando la barra ya se despegó */
   position: sticky;
   top: 0;
   z-index: 40;
   background: transparent;
-  transition: transform var(--dur-2) var(--ease-horma), background var(--dur-1), border-color var(--dur-1);
+  transition:
+    transform var(--dur-2) var(--ease-horma),
+    background var(--dur-1),
+    border-color var(--dur-1),
+    margin-bottom var(--dur-2) var(--ease-horma);
   border-bottom: 1px solid transparent;
 }
+/* Al despegarse la barra se achica, pero un margen invisible compensa lo que
+   pierde: el lugar que ocupa en la página no cambia. Si cambiara, el contenido
+   se correría y el navegador movería el scroll para compensar, y cerca del
+   inicio eso entra en bucle (el scroll "tiembla"). Padding y margen usan la
+   misma duración y curva, así la suma se mantiene constante en cada cuadro. */
 .hdr-barra.is-despegado {
   background: var(--negro);
   border-bottom-color: var(--line);
+  margin-bottom: calc(2 * (var(--hdr-pad) - var(--hdr-pad-chico)));
 }
 .hdr-barra.is-oculto {
   transform: translateY(-100%);
 }
 .hdr-barra.is-despegado .hdr {
-  padding-top: 14px;
-  padding-bottom: 14px;
+  padding-top: var(--hdr-pad-chico);
+  padding-bottom: var(--hdr-pad-chico);
 }
 /* Lo que queda pegado arriba al scrollear deja lugar a la barra cuando está visible */
 :root {
@@ -38,8 +50,8 @@ html[data-barra="visible"] {
   align-items: center;
   justify-content: space-between;
   gap: 32px;
-  padding-top: 28px;
-  padding-bottom: 28px;
+  padding-top: var(--hdr-pad);
+  padding-bottom: var(--hdr-pad);
   transition: padding var(--dur-2) var(--ease-horma);
 }
 .hdr-logo {
@@ -77,16 +89,45 @@ html[data-barra="visible"] {
   background: transparent;
   color: var(--blanco);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: scale var(--dur-1) var(--ease-horma);
+}
+.hdr-menu:active {
+  scale: 0.92;
+}
+
+/* Ícono menú ⇄ cruz.
+   Abrir: las líneas se juntan en el centro y, antes de terminar, giran a la cruz
+   con un pequeño rebote. Cerrar: el mismo camino al revés (se enderezan y se separan). */
+.icono-menu-linea {
+  transform-origin: 12px 12px;
+  transition:
+    rotate var(--dur-1) var(--ease-horma),
+    translate var(--dur-1) var(--ease-horma) calc(var(--dur-1) * 0.75);
+}
+.icono-menu-linea--a {
+  translate: 0 -4px;
+}
+.icono-menu-linea--b {
+  translate: 0 4px;
+}
+.hdr-menu[aria-expanded="true"] .icono-menu-linea {
+  translate: 0 0;
+  transition:
+    translate var(--dur-1) cubic-bezier(0.4, 0, 0.6, 1),
+    rotate var(--dur-2) var(--ease-ojalillo) calc(var(--dur-1) * 0.7);
+}
+.hdr-menu[aria-expanded="true"] .icono-menu-linea--a {
+  rotate: 45deg;
+}
+.hdr-menu[aria-expanded="true"] .icono-menu-linea--b {
+  rotate: -45deg;
 }
 
 @media (max-width: 960px) {
-  .hdr {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  .hdr-barra.is-despegado .hdr {
-    padding-top: 10px;
-    padding-bottom: 10px;
+  .hdr-barra {
+    --hdr-pad: 20px;
+    --hdr-pad-chico: 10px;
   }
   html[data-barra="visible"] {
     --alto-barra: 64px;
@@ -98,7 +139,7 @@ html[data-barra="visible"] {
     display: inline-flex;
   }
   .hdr-nav {
-    display: none;
+    display: flex;
     position: absolute;
     top: 100%;
     left: 12px;
@@ -110,13 +151,43 @@ html[data-barra="visible"] {
     background: var(--mesa-sombra);
     border: 1px solid var(--line);
     font-size: 16px;
+    /* Cerrado: queda armado pero invisible, así puede animarse al abrir.
+       Al cerrar se va rápido y acelerando, sin rebote; recién al final se oculta. */
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-12px) scale(0.9);
+    transform-origin: calc(100% - 30px) 0; /* nace desde el botón */
+    transition:
+      opacity 140ms cubic-bezier(0.4, 0, 1, 1),
+      transform 160ms cubic-bezier(0.4, 0, 1, 1),
+      visibility 0s linear 160ms;
   }
   .hdr-nav.is-abierto {
-    display: flex;
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    /* Abrir: arranca rápido y frena al final, con rebote de resorte (ver --resorte) */
+    transition:
+      opacity 180ms var(--ease-horma),
+      transform 500ms var(--resorte),
+      visibility 0s;
   }
   .hdr-nav a {
     padding: 14px 0;
     border-bottom: 1px solid var(--line);
+    opacity: 0;
+    translate: 0 -6px;
+    transition: opacity 100ms linear, translate 100ms linear;
+  }
+  /* Los links entran escalonados, uno detrás del otro */
+  .hdr-nav.is-abierto a {
+    opacity: 1;
+    translate: 0 0;
+    transition:
+      opacity 220ms var(--ease-horma) calc(60ms + var(--i, 0) * 35ms),
+      translate 320ms var(--ease-horma) calc(60ms + var(--i, 0) * 35ms);
   }
   .hdr-nav a:last-child {
     border-bottom: 0;
