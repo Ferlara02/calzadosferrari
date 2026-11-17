@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -8,19 +8,27 @@ import Home from "./pages/Home";
 import Producto from "./pages/Producto";
 import NoEncontrada from "./pages/NoEncontrada";
 
-/** Al cambiar de página vuelve arriba; con un #ancla baja a esa sección. */
+/**
+ * Al cambiar de página vuelve arriba; con un #ancla baja a esa sección.
+ * Depende también de `key` para que tocar de nuevo un link al mismo #ancla
+ * (la dirección no cambia) vuelva a bajar. Si solo cambian los parámetros
+ * (?color= en la ficha), no se mueve.
+ */
 function Desplazamiento() {
-  const { pathname, hash } = useLocation();
+  const { pathname, hash, key } = useLocation();
+  const anterior = useRef(null);
   useEffect(() => {
+    const mismaVista = anterior.current === pathname + hash;
+    anterior.current = pathname + hash;
     if (hash) {
       // espera a que la página nueva esté pintada
       requestAnimationFrame(() => {
         document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth", block: "start" });
       });
-    } else {
+    } else if (!mismaVista) {
       window.scrollTo(0, 0);
     }
-  }, [pathname, hash]);
+  }, [pathname, hash, key]);
   return null;
 }
 
