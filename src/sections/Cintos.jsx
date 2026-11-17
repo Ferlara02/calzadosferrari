@@ -6,7 +6,7 @@ const TIRA = "M-20 150 C 180 150, 260 70, 480 80 S 760 120, 800 110";
 export default function Cintos() {
   const [ref, visto] = useEnPantalla({ threshold: 0.35 });
   return (
-    <section className="sec sec-cintos tema-blanco" aria-labelledby="cintos-titulo">
+    <section id="cintos" className="sec sec-cintos tema-blanco" aria-labelledby="cintos-titulo">
       <div className="contenedor cintos">
         <div className="pila">
           <h2 id="cintos-titulo" className="titulo h2">

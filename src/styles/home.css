@@ -1003,3 +1003,181 @@
     padding: 48px 28px 40px;
   }
 }
+
+/* Cinta de anuncios con forma de cinto (CintaAnuncios.jsx) */
+.cinta {
+  --cinta-alto: 40px;                   /* alto del cuero; todo lo demás escala con esto */
+  --u: calc(var(--cinta-alto) / 34);
+  --cinta-dur: 36s;                     /* lo que tarda en pasar un tramo + hebilla */
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.cinta-pista {
+  display: flex;
+  width: max-content;
+  animation: cinta-correr var(--cinta-dur) linear infinite;
+}
+/* Tonos (TONO en CintaAnuncios.jsx) */
+.cinta--oscura {
+  --cinta-cara: #0f0f0e;                /* cuero */
+  --cinta-canto: #363733;               /* la segunda capa, que asoma en los bordes */
+  --cinta-hilo: #8c8b84;                /* costura */
+  --cinta-separador: #8c8b84;
+  --cinta-texto: var(--blanco);
+  --cinta-doblez: #1a1a18;
+  --cinta-ojalillo: #2a2a27;
+  --cinta-ojalillo-borde: #6e6d67;
+  --cinta-sombra: rgba(0, 0, 0, 0.6);
+  --cinta-metal: var(--blanco);
+  --cinta-metal-borde: transparent;
+  --cinta-reflejo: var(--hilo);
+}
+.cinta--clara {
+  --cinta-cara: var(--blanco);
+  --cinta-canto: var(--hilo);
+  --cinta-hilo: #8c8b84;                /* costura gris */
+  --cinta-separador: var(--negro);
+  --cinta-texto: var(--negro);
+  --cinta-doblez: #e4e3de;
+  --cinta-ojalillo: #2a2a27;
+  --cinta-ojalillo-borde: var(--negro);
+  --cinta-sombra: rgba(0, 0, 0, 0.3);
+  --cinta-metal: var(--negro);
+  --cinta-metal-borde: var(--hilo);     /* sin esto, el marco negro se pierde sobre el fondo negro */
+  --cinta-reflejo: rgba(255, 255, 255, 0.55);
+}
+/* Se frena para poder leer o tocar un anuncio:
+   - mientras el dedo está apoyado (:active);
+   - con el mouse encima, solo si hay mouse de verdad (en celulares el "hover"
+     queda pegado después de tocar y la cinta no arrancaba más);
+   - con foco de teclado (:focus-visible), no con el foco que deja un clic,
+     que sigue puesto después de bajar a la sección. */
+.cinta:active .cinta-pista,
+.cinta:has(a:focus-visible) .cinta-pista {
+  animation-play-state: paused;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cinta:hover .cinta-pista {
+    animation-play-state: paused;
+  }
+}
+@keyframes cinta-correr {
+  to {
+    transform: translateX(calc(-100% / 3)); /* una copia (COPIAS = 3) */
+  }
+}
+.cinta-modulo {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+.cinta-tramo {
+  display: flex;
+  align-items: center;
+  height: var(--cinta-alto);
+  margin: 0;
+  padding: 0 calc(var(--u) * 30);
+  list-style: none;
+  /* costuras arriba y abajo, cuero y canto gris en los bordes (igual que la hebilla) */
+  background:
+    repeating-linear-gradient(90deg, var(--cinta-hilo) 0 calc(var(--u) * 5), transparent 0 calc(var(--u) * 9))
+      0 calc(var(--u) * 6.25) / 100% calc(var(--u) * 1.5) no-repeat,
+    repeating-linear-gradient(90deg, var(--cinta-hilo) 0 calc(var(--u) * 5), transparent 0 calc(var(--u) * 9))
+      0 calc(var(--u) * 26.25) / 100% calc(var(--u) * 1.5) no-repeat,
+    var(--cinta-cara);
+  box-shadow:
+    inset 0 calc(var(--u) * 3) 0 var(--cinta-canto),
+    inset 0 calc(var(--u) * -3) 0 var(--cinta-canto);
+}
+.cinta-tramo li {
+  display: flex;
+  align-items: center;
+}
+/* separador: el óvalo del logo */
+.cinta-tramo li + li::before {
+  content: "";
+  width: calc(var(--u) * 11);
+  height: calc(var(--u) * 7);
+  margin: 0 calc(var(--u) * 22);
+  border: 1.5px solid var(--cinta-separador);
+  border-radius: 50%;
+}
+.cinta-tramo a {
+  padding: calc(var(--u) * 8) 0;
+  color: var(--cinta-texto);
+  font: 500 calc(var(--u) * 13.5) / 1 var(--font-ui);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.cinta-tramo a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cinta-hebilla {
+  display: block;
+  flex: none;
+  margin: 0 -1px; /* se monta 1px sobre cada tramo para que no se vea la unión */
+  height: calc(var(--u) * 60);
+  width: auto;
+  aspect-ratio: 200 / 60;
+  overflow: visible;
+}
+.cinta-hebilla .c-canto { fill: var(--cinta-canto); }
+.cinta-hebilla .c-cara { fill: var(--cinta-cara); }
+.cinta-hebilla .c-hilo {
+  fill: none;
+  stroke: var(--cinta-hilo);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 4;
+}
+.cinta-hebilla .c-sombra { fill: var(--cinta-sombra); }
+.cinta-hebilla .c-doblez {
+  fill: var(--cinta-doblez);
+  stroke: var(--cinta-canto);
+  stroke-width: 1.5;
+}
+.cinta-hebilla .c-ojalillo {
+  fill: var(--cinta-ojalillo);
+  stroke: var(--cinta-ojalillo-borde);
+  stroke-width: 1;
+}
+.cinta-hebilla .c-agujero { fill: #000; }
+.cinta-hebilla .c-metal,
+.cinta-hebilla .c-metal-borde {
+  fill: none;
+  stroke: var(--cinta-metal);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+}
+.cinta-hebilla .c-marco,
+.cinta-hebilla .c-marco-borde {
+  fill: none;
+  stroke: var(--cinta-metal);
+  stroke-width: 5;
+}
+.cinta-hebilla .c-metal-borde,
+.cinta-hebilla .c-marco-borde {
+  stroke: var(--cinta-metal-borde);
+  stroke-width: 7.5;
+}
+/* reflejo del metal sobre una parte del marco */
+.cinta-hebilla .c-reflejo {
+  fill: none;
+  stroke: var(--cinta-reflejo);
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-dasharray: 22 78;
+  stroke-dashoffset: -4;
+}
+@media (max-width: 640px) {
+  .cinta {
+    --cinta-alto: 36px;
+    --cinta-dur: 34s;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cinta-pista {
+    animation: none;
+  }
+}
