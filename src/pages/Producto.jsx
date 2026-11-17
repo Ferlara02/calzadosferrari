@@ -24,13 +24,6 @@ export default function Producto() {
   const conSelector = colores.filter((c) => c.nombre).length > 1;
   const mercadoLibre = color?.mercadoLibre || producto?.mercadoLibre;
 
-  useEffect(() => {
-    if (producto) document.title = `${producto.nombre} — Ferrari Calzados`;
-    return () => {
-      document.title = "Ferrari — Fábrica de Calzados";
-    };
-  }, [producto]);
-
   // Al cambiar de producto o de color, vuelve a la primera foto
   useEffect(() => setFotoActiva(0), [id, color?.slug]);
 

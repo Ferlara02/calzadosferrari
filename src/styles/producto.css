@@ -207,6 +207,10 @@
   background: #ffe600;
   border-color: #ffe600;
   color: #2d3277;
+  padding: 0 22px;
+  white-space: nowrap;
+}
+.btn-ml:has(.btn-ml-logo) {
   padding-left: 16px;
 }
 .btn-ml:hover {

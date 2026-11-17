@@ -3,6 +3,7 @@ import { Route, Routes, useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import WhatsAppFlotante from "./components/WhatsAppFlotante";
+import Seo from "./components/Seo";
 import Home from "./pages/Home";
 import Producto from "./pages/Producto";
 import NoEncontrada from "./pages/NoEncontrada";
@@ -26,6 +27,7 @@ function Desplazamiento() {
 export default function App() {
   return (
     <>
+      <Seo />
       <Desplazamiento />
       <a className="saltar" href="#contenido">
         Saltar al contenido
