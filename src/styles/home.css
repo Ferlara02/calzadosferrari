@@ -662,14 +662,22 @@
   height: clamp(96px, 11vw, 160px);
   margin-top: 96px;
 }
+/* La línea no usa vector-effect: non-scaling-stroke porque, combinado con
+   pathLength, el navegador mide el trazo en píxeles de pantalla y en pantallas
+   anchas la animación terminaba antes del final (la línea quedaba cortada).
+   El grosor va en unidades del dibujo y se ajusta en celular (ver abajo). */
 .rotura-linea {
   fill: none;
   stroke: var(--negro);
-  stroke-width: 3;
+  stroke-width: 3.2;
   stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
+}
+@media (max-width: 640px) {
+  .rotura-linea {
+    stroke-width: 5.5; /* el dibujo se achica: así sigue midiendo unos 3px */
+  }
 }
 .rotura-cruz {
   fill: none;
@@ -1026,8 +1034,8 @@
   --cinta-vol-4: var(--cinta-cara);
 }
 .cinta--volumen.cinta--oscura {
-  --cinta-vol-1: #1b1b19;
-  --cinta-vol-2: #30302d; /* brillo */
+  --cinta-vol-1: #1f1f1d;
+  --cinta-vol-2: #3b3b37; /* brillo */
   --cinta-vol-3: #0f0f0e;
   --cinta-vol-4: #050505;
 }
