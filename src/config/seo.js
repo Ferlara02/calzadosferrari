@@ -8,7 +8,7 @@ import { todasLasFotos } from "../utils/colores";
 // ej. "https://calzadosferrari.com.ar". Con eso se generan solos el sitemap, las
 // direcciones canónicas y los links absolutos de las imágenes para compartir.
 // También se puede cargar como variable de entorno SITIO_URL en Cloudflare Pages.
-export const SITIO_URL = "";
+export const SITIO_URL = "https://calzadosferrari.com.ar";
 
 const MARCA = "Ferrari Calzados";
 
