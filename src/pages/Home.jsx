@@ -5,6 +5,7 @@ import Cintos from "../sections/Cintos";
 import Mayorista from "../sections/Mayorista";
 import Reparaciones from "../sections/Reparaciones";
 import DondeEstamos from "../sections/DondeEstamos";
+import Descosido from "../sections/Descosido";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <Mayorista />
       <Reparaciones />
       <DondeEstamos />
+      <Descosido />
     </>
   );
 }
