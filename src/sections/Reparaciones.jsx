@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import useEnPantalla from "../hooks/useEnPantalla";
 import { linkWhatsApp, MENSAJES } from "../utils/whatsapp";
+import Perla, { usePausaFueraDePantalla } from "../components/perla/Perla";
 
 const ARREGLOS = ["Suelas despegadas", "Costuras abiertas", "Tacos gastados", "Cierres y abrojos", "Plantillas", "Cuero roto"];
 
@@ -26,6 +27,7 @@ const CRUCES = PUNTOS.slice(1).map(([x2, y2], i) => {
 export default function Reparaciones() {
   const [refParches, parchesVistos] = useEnPantalla({ threshold: 0.3 });
   const [refRotura, roturaVista] = useEnPantalla({ threshold: 0.4 });
+  const [refPerla, perlaPausada] = usePausaFueraDePantalla();
 
   return (
     <section id="reparaciones" className="rep" aria-labelledby="rep-titulo">
@@ -76,6 +78,15 @@ export default function Reparaciones() {
               </Link>
             </div>
           </div>
+        </div>
+
+        {/* Perla le pega al carretel y el hilo suelto llega hasta la costura */}
+        <div ref={refPerla} className={`rep-perla ${perlaPausada ? "is-pausada" : ""}`}>
+          <svg className="rep-perla-hilo" viewBox="0 0 260 40" aria-hidden="true">
+            <path d="M8 22 C 38 36, 56 10, 88 24 S 134 50, 168 36 S 218 22, 252 40" />
+          </svg>
+          <Perla pose="sentada" fondo="claro" zarpazo className="rep-perla-gata" />
+          <Perla pose="carretel" fondo="claro" className="rep-perla-carretel" />
         </div>
       </div>
 

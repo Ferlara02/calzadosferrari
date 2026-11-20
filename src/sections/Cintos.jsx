@@ -1,5 +1,6 @@
 import useEnPantalla from "../hooks/useEnPantalla";
 import { linkWhatsApp, MENSAJES } from "../utils/whatsapp";
+import PerlaPaseo from "../components/perla/PerlaPaseo";
 
 const TIRA = "M-20 150 C 180 150, 260 70, 480 80 S 760 120, 800 110";
 
@@ -68,6 +69,8 @@ export default function Cintos() {
           </g>
         </svg>
       </div>
+      {/* Perla pasea por abajo de la sección */}
+      <PerlaPaseo />
     </section>
   );
 }

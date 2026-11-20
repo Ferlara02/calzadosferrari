@@ -1,9 +1,27 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MapaIlustrado from "../components/MapaIlustrado";
 import { IconoFlechaAbajo } from "../components/Iconos";
 import { NEGOCIO } from "../config/negocio";
+import Perla, { usePausaFueraDePantalla } from "../components/perla/Perla";
+
+// Globo "¡Hola, soy Perla!": aparece a los `primero` segundos y después cada `cada` segundos, durante `dura`.
+const GLOBO = { primero: 2, cada: 12, dura: 5 };
 
 export default function Hero() {
+  const [ref, fueraDePantalla] = usePausaFueraDePantalla();
+  const [segundos, setSegundos] = useState(0);
+
+  // reloj del globo: corre solo mientras la portada está en pantalla
+  useEffect(() => {
+    if (fueraDePantalla) return;
+    const id = setInterval(() => setSegundos((s) => s + 1), 1000);
+    return () => clearInterval(id);
+  }, [fueraDePantalla]);
+
+  const desde = segundos - GLOBO.primero;
+  const globo = desde >= 0 && desde % GLOBO.cada < GLOBO.dura;
+
   return (
     <section className="hero">
       {/* Óvalos de fondo: se dibujan al cargar */}
@@ -21,22 +39,38 @@ export default function Hero() {
           </p>
         </div>
 
-        <Link to="/#local" className="ubic" aria-label="Dónde estamos: ver mapa, dirección y horarios">
-          <div className="ubic-mapa" aria-hidden="true">
-            <MapaIlustrado />
-          </div>
-          <div className="ubic-datos">
-            <div className="ubic-textos">
-              <span className="titulo ubic-titulo">Dónde estamos</span>
-              <span className="meta">
-                {NEGOCIO.direccion}, {NEGOCIO.ciudad}
+        <div className="ubic-caja">
+          {/* Perla se asoma por detrás del adelanto al cargar la página. Cada tanto saluda;
+              al tocarla lleva a "Dónde estamos", donde ella se presenta. */}
+          <Link
+            ref={ref}
+            to="/#local"
+            state={{ perlaSaluda: true }}
+            className={`perla-inicio ${fueraDePantalla ? "is-pausada" : ""}`}
+            aria-label="Hola, soy Perla, la gata de la fábrica. Vení a conocerme"
+          >
+            <span className={`perla-inicio-globo ${globo ? "is-visible" : ""}`} aria-hidden="true">
+              ¡Hola, soy Perla!
+            </span>
+            <Perla pose="asomada" />
+          </Link>
+          <Link to="/#local" className="ubic" aria-label="Dónde estamos: ver mapa, dirección y horarios">
+            <div className="ubic-mapa" aria-hidden="true">
+              <MapaIlustrado />
+            </div>
+            <div className="ubic-datos">
+              <div className="ubic-textos">
+                <span className="titulo ubic-titulo">Dónde estamos</span>
+                <span className="meta">
+                  {NEGOCIO.direccion}, {NEGOCIO.ciudad}
+                </span>
+              </div>
+              <span className="ubic-ir" aria-hidden="true">
+                <IconoFlechaAbajo />
               </span>
             </div>
-            <span className="ubic-ir" aria-hidden="true">
-              <IconoFlechaAbajo />
-            </span>
-          </div>
-        </Link>
+          </Link>
+        </div>
       </div>
     </section>
   );

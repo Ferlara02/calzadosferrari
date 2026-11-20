@@ -1,15 +1,18 @@
 import { Link } from "react-router-dom";
 import FerrariLogo from "./FerrariLogo";
+import Perla, { usePausaFueraDePantalla } from "./perla/Perla";
 import { SECCIONES } from "./Header";
 import { NEGOCIO, comoLlegarUrl } from "../config/negocio";
 import { linkWhatsApp, MENSAJES } from "../utils/whatsapp";
 
 export default function Footer() {
+  const [refPerla, perlaPausada] = usePausaFueraDePantalla();
   return (
     <footer className="pie-barra">
       <div className="contenedor pie">
         <div className="pie-marca">
-          <div className="pie-logo">
+          <div ref={refPerla} className={`pie-logo ${perlaPausada ? "is-pausada" : ""}`}>
+            <Perla pose="dormida" className="pie-perla" />
             <FerrariLogo variante="completo" animar="vista" />
           </div>
           <p className="meta">Calzado de cuero, hecho en Córdoba.</p>
