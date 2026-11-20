@@ -8,6 +8,7 @@ import "./styles/base.css";
 import "./styles/layout.css";
 import "./styles/home.css";
 import "./styles/producto.css";
+import "./styles/perla.css";
 import App from "./App";
 
 const raiz = document.getElementById("root");
